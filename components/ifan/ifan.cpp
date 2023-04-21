@@ -18,6 +18,9 @@ void IFan::setup() {
   pinMode(relay_2, 0x01);
   pinMode(relay_3, 0x01);
 
+  //Initialize buzzer to stop errant beeping due to non-initialized pin
+  digitalWrite(buzzer, HIGH);
+  
   auto restore = this->restore_state_();
   if (restore.has_value()) {
     restore->apply(*this);
@@ -80,13 +83,13 @@ void IFan::set_low() {
   beep();
 }
 void IFan::set_med() {
-  digitalWrite(relay_1, LOW);
+  digitalWrite(relay_1, HIGH);
   digitalWrite(relay_2, HIGH);
   digitalWrite(relay_3, LOW);
   beep(2);
 }
 void IFan::set_high() {
-  digitalWrite(relay_1, LOW);
+  digitalWrite(relay_1, HIGH);
   digitalWrite(relay_2, LOW);
   digitalWrite(relay_3, HIGH);
 
